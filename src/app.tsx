@@ -7,6 +7,7 @@ import { useSuggestionAsks } from './useSuggestionAsks';
 import { ErrorMessage } from './errorMessage';
 import { AskButton } from './askButton';
 import { SuggestionButton } from './suggestionButton';
+import { useFetchStartApi } from './useFetchStartApi';
 
 const SIZE_IN_PX_BLOCK_INPUT = 128;
 
@@ -17,6 +18,7 @@ export const App = () => {
   const { messages, makeAsk, causeFocusMessageDelayed, isLoading, error } = useInteractiveChat();
   const { suggestionAsks, finishSuggestion } = useSuggestionAsks();
   const { innerHeight } = useActualWindowSize();
+  const connectApi = useFetchStartApi();
 
   const chatRef = useRef(null);
   useScrollToBottom(chatRef, [messages, causeFocusMessageDelayed]);
@@ -49,6 +51,30 @@ export const App = () => {
         {messages.map((item) => {
           return <MessageItem left={item.left} body={item.body} key={item.id} />;
         })}
+
+        {connectApi.isLoading ? (
+          <div className="bg-orange-200 text-orange-800 px-4 py-2 rounded-md mt-8 animate-pulse">
+            <div>Conectando com a instância gratuita...</div>
+          </div>
+        ) : undefined}
+
+        {connectApi.error ? (
+          <div className="bg-red-200 text-red-800 px-4 py-2 rounded-md mt-8">
+            <div>Algo deu errado, não consegui me comunicar com a instância gratuita...</div>
+
+            <div className="flex items-center justify-center">
+              <button type="button" onClick={() => connectApi.fetchAsk()} className="text-center underline">
+                Tentar novamente
+              </button>
+            </div>
+          </div>
+        ) : undefined}
+
+        {connectApi.success ? (
+          <div className="bg-green-200 text-green-800 px-4 py-2 rounded-md mt-8">
+            <div>Tudo certo!</div>
+          </div>
+        ) : undefined}
 
         <ErrorMessage>{error}</ErrorMessage>
       </div>
