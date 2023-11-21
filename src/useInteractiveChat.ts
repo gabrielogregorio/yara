@@ -26,8 +26,8 @@ export const useInteractiveChat = () => {
 
         setMessages((prevMessageList) => [...prevMessageList, { body: answer, left: true, id: generateId() }]);
       })
-      .catch(() => {
-        //
+      .catch((err: unknown) => {
+        throw err;
       });
   };
 
