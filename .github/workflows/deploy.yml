@@ -1,41 +1,41 @@
 name: deploy
 
 on:
-    push:
-        branches: [main]
+  push:
+    branches: [main]
 
 jobs:
-    install:
-        runs-on: ubuntu-latest
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        timeout-minutes: 10
-        strategy:
-            matrix:
-                node-version: [16.x]
-        steps:
-            - name: checkout
-              uses: actions/checkout@v2
+  install:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
 
-            - name: Setup Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v2
-              with:
-                  node-version: ${{ matrix.node-version }}
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
-            - name: install dependencies
-              run: yarn
+      - name: install dependencies
+        run: yarn
 
-            - name: build App
-              run: |
-                  echo "export const envs = { VITE_BASE_URL: '/yara', VITE_ENVIRONMENT: 'production', API_YARA: 'test' };" > src/env.ts
-                  yarn build
+      - name: build App
+        run: |
+          echo "export const envs = { VITE_BASE_URL: '/yara', VITE_ENVIRONMENT: 'production', API_YARA: 'https://yara-api.onrender.com' };" > src/env.ts
+          yarn build
 
-            - name: Deploy with gh-pages
-              run: |
-                  git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/gabrielogregorio/yara.git
+      - name: Deploy with gh-pages
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/gabrielogregorio/yara.git
 
-                  echo "copy index to 404 page"
-                  cp build/index.html build/404.html
+          echo "copy index to 404 page"
+          cp build/index.html build/404.html
 
-                  npx gh-pages -d build --add -u "github-actions-bot <support+actions@github.com>"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npx gh-pages -d build --add -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
