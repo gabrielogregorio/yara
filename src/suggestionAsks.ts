@@ -1,10 +1,11 @@
 export const suggestionAsksData = [
-  'O que é você?',
+  'Se apresente',
   'Conte-me mais sobre ele',
-  'Qual é a idade do Gabriel',
-  'Quais os cursos o Gabriel fez?',
-  'Quais a escolaridade do gabriel?',
-  'Onde vejo os projetos do Gabriel?',
+  'Onde ele trabalha?',
+  'Qual é a idade dele?',
+  'Quais os cursos eles fez?',
+  'Qual a escolaridade dele?',
+  'Onde vejo os projetos dele?',
   'Qual é o contato dele',
   'Qual é o e-mail dele?',
 ];

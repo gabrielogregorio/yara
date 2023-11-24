@@ -1,1 +1,1 @@
-export const envs = { VITE_BASE_URL: '', API_YARA: 'http://localhost:3333' };
+export const envs = { VITE_BASE_URL: '', API_YARA: 'http://localhost:10000' };
