@@ -26,7 +26,7 @@ jobs:
 
       - name: build App
         run: |
-          echo "export const envs = { VITE_BASE_URL: '/yara', VITE_ENVIRONMENT: 'production', API_YARA: 'https://yara-api.onrender.com' };" > src/env.ts
+          echo "export const envs = { VITE_BASE_URL: '/yara', VITE_ENVIRONMENT: 'production', API_YARA: 'https://yara-api.onrender.com/graphql' };" > src/env.ts
           yarn build
 
       - name: Deploy with gh-pages

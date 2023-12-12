@@ -1,36 +1,40 @@
 import { useEffect, useState } from 'react';
-import { ApiService } from './ApiService';
+import { useLazyQuery, gql } from '@apollo/client';
+
+const ASK_QUERY = gql`
+  query {
+    ask(message: "Olá") {
+      body
+    }
+  }
+`;
 
 const TIME_IN_MS_TO_EXIT_SUCCESS = 2000;
+
 export const useFetchStartApi = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [askQuery, { loading, error, data }] = useLazyQuery(ASK_QUERY);
   const [success, setSuccess] = useState(false);
 
-  const fetchAsk = () => {
-    setIsLoading(true);
-    setError('');
-    setSuccess(false);
-
-    ApiService.get('/')
-      .then(() => {
-        setSuccess(true);
-
-        setTimeout(() => {
-          setSuccess(false);
-        }, TIME_IN_MS_TO_EXIT_SUCCESS);
-      })
-      .catch(() => {
-        setError('Ops, aconteceu algum erro desconhecido');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  useEffect(() => {
+    askQuery()
+      .then(() => {})
+      .catch(() => {});
+  }, [askQuery]);
 
   useEffect(() => {
-    fetchAsk();
-  }, []);
+    if (data) {
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+      }, TIME_IN_MS_TO_EXIT_SUCCESS);
+    }
+  }, [data]);
 
-  return { fetchAsk, error, isLoading, success };
+  const fetchAsk = () => {
+    askQuery()
+      .then(() => {})
+      .catch(() => {});
+  };
+
+  return { fetchAsk, error: error ? error.message : '', isLoading: loading, success };
 };

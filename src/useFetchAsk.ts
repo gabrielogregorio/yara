@@ -1,27 +1,28 @@
-import { useState } from 'react';
-import { ApiService } from './ApiService';
+import { useLazyQuery, gql } from '@apollo/client';
+
+const QUERY = gql`
+  query Ask($message: String!) {
+    ask(message: $message) {
+      body
+    }
+  }
+`;
+
+interface IChatAsk {
+  ask: { body: string };
+}
 
 export const useFetchAsk = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState('');
+  const [askQuery, { loading, error }] = useLazyQuery<IChatAsk>(QUERY);
 
-  const fetchAsk = async (message: string): Promise<string> => {
-    setIsLoading(true);
-    setError('');
+  const fetchAsk = async (message: string) => {
+    const result = await askQuery({ variables: { message } });
+    if (result.data?.ask.body) {
+      return result.data.ask.body;
+    }
 
-    return ApiService.post('/', {
-      message,
-    })
-      .then((response) => {
-        return response.data.body || '';
-      })
-      .catch(() => {
-        setError('Ops, aconteceu algum erro desconhecido');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    throw new Error(`error, da is invalid ${JSON.stringify(result)}`);
   };
 
-  return { fetchAsk, error, isLoading };
+  return { fetchAsk, error: error ? error.message : '', isLoading: loading };
 };

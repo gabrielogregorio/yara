@@ -26,9 +26,7 @@ export const useInteractiveChat = () => {
 
         setMessages((prevMessageList) => [...prevMessageList, { body: answer, left: true, id: generateId() }]);
       })
-      .catch((err: unknown) => {
-        throw err;
-      });
+      .catch(() => {});
   };
 
   return { messages, makeAsk, error, causeFocusMessageDelayed, isLoading };
