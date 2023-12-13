@@ -13,7 +13,9 @@ interface IChatAsk {
 }
 
 export const useFetchAsk = () => {
-  const [askQuery, { loading, error }] = useLazyQuery<IChatAsk>(QUERY);
+  const [askQuery, { loading, error }] = useLazyQuery<IChatAsk>(QUERY, {
+    fetchPolicy: 'network-only',
+  });
 
   const fetchAsk = async (message: string) => {
     const result = await askQuery({ variables: { message } });

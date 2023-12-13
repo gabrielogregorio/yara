@@ -5,5 +5,5 @@ export const ErrorMessage = ({ children }: { children: ReactNode }) => {
     return <div />;
   }
 
-  return <div className="px-4 py-2 text-sm text-red-700 bg-red-100 rounded-lg">{children}</div>;
+  return <div className="px-4 py-2 text-sm text-[#ff1111] border-2 border-[#ff1111]">{children}</div>;
 };

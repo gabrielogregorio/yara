@@ -43,7 +43,7 @@ export const App = () => {
 
   const styleShowSuggestion = sendAnyMessage ? 'block animate-fadeIn' : 'hidden';
   return (
-    <div className="relative overflow-hidden px-[2%]" style={{ height: innerHeight }}>
+    <div className="relative overflow-hidden px-[2%] bg-black" style={{ height: innerHeight }}>
       <div
         style={styleMainText}
         className="flex flex-col items-center h-full gap-6 py-4 overflow-y-scroll text-gray-800 scrollbar"
@@ -53,13 +53,13 @@ export const App = () => {
         })}
 
         {connectApi.isLoading ? (
-          <div className="bg-orange-200 text-orange-800 px-4 py-2 rounded-md mt-8 animate-pulse">
+          <div className="bg-black border-2 border-[#007aff] text-[#02d7f2] px-4 py-2 mt-8 animate-pulse">
             <div>Conectando com a instância gratuita...</div>
           </div>
         ) : undefined}
 
         {connectApi.error ? (
-          <div className="bg-red-200 text-red-800 px-4 py-2 rounded-md mt-8">
+          <div className="bg-black border-2 border-[#ff1111] text-[#02d7f2] px-4 py-2 mt-8">
             <div>Algo deu errado, não consegui me comunicar com a instância gratuita...</div>
 
             <div className="flex items-center justify-center">
@@ -71,7 +71,7 @@ export const App = () => {
         ) : undefined}
 
         {connectApi.success ? (
-          <div className="bg-green-200 text-green-800 px-4 py-2 rounded-md mt-8">
+          <div className="bg-black border-2 border-[#007aff] text-[#007aff] px-4 py-2 mt-8">
             <div>Tudo certo!</div>
           </div>
         ) : undefined}
@@ -81,12 +81,12 @@ export const App = () => {
 
       <div
         style={styleTextInputs}
-        className="pb-[2rem] w-full overflow-hidden fixed left-0 right-0 bottom-0 backdrop-blur-md bg-white/30 flex items-center justify-center px-[2%]">
+        className="pb-[2rem] w-full overflow-hidden fixed left-0 right-0 bottom-0 backdrop-blur-md bg-black border-t-2 border-[#f2e900] flex items-center justify-center px-[2%]">
         <div className="flex flex-col items-center w-full ">
           <div className="mt-[2rem] max-w-[800px] w-full">
             <div className="flex w-full gap-4 ">
               <input
-                className="px-3 py-2 rounded-2xl bg-white border focus:border-slate-950 border-slate-700 shadow-2xl text-slate-700 w-full hover:scale-[102%] transition-all duration-150 "
+                className="px-3 py-2 text-[#f2e900] bg-black border-2 focus:outline-none focus:border-[#f2e900] border-[#f2e900] shadow-2xl placeholder:text-[#f2e900] w-full hover:scale-[102%] transition-all duration-150 "
                 type="text"
                 onKeyDown={(event) => {
                   if (event.code === 'Enter') {
@@ -113,7 +113,7 @@ export const App = () => {
           <div className={`grid grid-cols-2 gap-4 mt-[1rem] max-w-[800px] w-full ${styleShowSuggestion}`}>
             {suggestionAsks.map((ask) => {
               return (
-                <SuggestionButton key={ask} onClick={() => selectSuggestion(ask)}>
+                <SuggestionButton isDisabled={isLoading} key={ask} onClick={() => selectSuggestion(ask)}>
                   {ask}
                 </SuggestionButton>
               );

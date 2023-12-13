@@ -8,15 +8,15 @@
 
 .scrollbar::-webkit-scrollbar-track {
   border: none;
-  background: #f1f5f9;
+  background: #000000;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
   border: none;
-  background: #ddd;
+  background: #ff1111;
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
   border: none;
-  background: #ddd;
+  background: #ff1111;
 }

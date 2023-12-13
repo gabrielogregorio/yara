@@ -12,14 +12,14 @@ export const MessageItem = ({ body, left = false }: { body: string; left?: boole
   const stylesToShowMessages = waitMinTime && left ? 'hidden' : 'flex';
   const stylesToPositionMessage = left ? 'justify-start' : 'justify-end';
   const stylesBackgroundColorByPosition = left
-    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 border-blue-500 text-white hover:border-blue-800'
-    : 'bg-white border-slate-200 hover:border-slate-400';
+    ? 'bg-black border-2 border-[#02d7f2] text-[#02d7f2]'
+    : 'bg-black border-2 border-[#f2e900] text-[#f2e900]';
 
   return (
     <div
       className={`${stylesToShowMessages} ${stylesToPositionMessage} max-w-[800px] w-full animate-fadeIn transition-all items-center duration-150 cursor-pointer select-text`}>
       <div
-        className={`${stylesBackgroundColorByPosition} border rounded-2xl px-4 py-4 pr-8 w-[90%] shadow-xl text-base break-words`}>
+        className={`${stylesBackgroundColorByPosition} border px-4 py-4 pr-8 w-[90%] shadow-xl text-base break-words`}>
         <MarkdownToHtml body={body} />
       </div>
     </div>
